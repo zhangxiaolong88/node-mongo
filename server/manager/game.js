@@ -16,8 +16,8 @@ exports.getGames = function(req, res) {
 		gameVersion2 = req.query.gameVersion2;
 	if (gameVersion1 || gameVersion2) {
 		query.version = {
-			$gt: parseInt(gameVersion1),
-			$lt: parseInt(gameVersion2)
+			$gte: parseInt(gameVersion1),
+			$lte: parseInt(gameVersion2)
 		};
 	}
 
