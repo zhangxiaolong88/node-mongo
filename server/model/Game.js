@@ -11,7 +11,11 @@ var GameSchema = new Schema({
 	create_date: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	author: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Author'
+	}]
 });
 
 module.exports = mongodb.mongoose.model("Game", GameSchema);

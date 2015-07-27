@@ -1,4 +1,6 @@
 var Game = require("../model/Game.js");
+var Author = require("../model/Author.js");
+var Org = require("../model/Organization.js");
 
 exports.getGames = function(req, res) {
 	var query = {};
@@ -43,6 +45,22 @@ exports.getGames = function(req, res) {
 			});
 		}
 	});
+	/*Game.findOne({name: "测试"})
+	.populate("author")
+	.exec(function(err,obj){
+		if(err){
+			console.log(err);
+		} else {
+			console.log(obj.author[0]._id);
+			Author.findOne({_id: obj.author[0]._id}).exec(function(err2,obj2){
+				if(err2){
+					console.log(err2);
+				} else {
+					console.log(obj2);
+				}
+			});
+		}
+	});*/
 };
 
 exports.saveGame = function(req, res) {
@@ -92,8 +110,8 @@ exports.saveGame = function(req, res) {
 			}
 		});*/
 	} else {
-		var instance = new Game(game);
-		instance.save(function(err) {
+		var g = new Game(game);
+		g.save(function(err) {
 			if (err) {
 				res.send({
 					'success': false,
@@ -105,6 +123,41 @@ exports.saveGame = function(req, res) {
 				});
 			}
 		});
+
+		/*var o = new Org({
+			name: "公益组织"
+		});
+		o.save(function(err) {
+			if (err) {
+				console.log("保存org失败");
+			} else {
+				var a = new Author({
+					name: "张小龙"
+				});
+				a.org.push(o);
+				a.save(function(err) {
+					if (err) {
+						console.log("保存Author失败");
+					} else {
+						var g = new Game(game);
+						g.author.push(a);
+						g.save(function(err) {
+							if (err) {
+								res.send({
+									'success': false,
+									'err': err
+								});
+							} else {
+								res.send({
+									'success': true
+								});
+							}
+						});
+					}
+				});
+			}
+		});*/
+
 	}
 
 };
